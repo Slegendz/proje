@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "nextjs-app"
     }
+    
     stages {
 
         stage('Checkout Code') {
