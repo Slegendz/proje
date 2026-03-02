@@ -5,6 +5,8 @@ pipeline {
         IMAGE_NAME = "nextjs-app"
     }
 
+    tools {nodejs "my-nodejs"}
+
     stages {
 
         stage('Checkout Code') {
