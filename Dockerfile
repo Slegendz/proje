@@ -1,28 +1,7 @@
-FROM node:20-alpine AS deps
+FROM node:20-alpine
 WORKDIR /app
-
-COPY package.json package-lock.json* ./
-RUN npm ci
-
-# 2️⃣ Build the application
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+COPY package*.json ./
+RUN npm install --no-audit --no-fund
 COPY . .
-
-RUN npm run build
-
-# 3️⃣ Production image
-FROM node:20-alpine AS runner
-WORKDIR /app
-
-ENV NODE_ENV=production
-
-# Create non-root user
-RUN addgroup -S nextjs && adduser -S nextjs -G nextjs
-
-USER nextjs
-
 EXPOSE 3000
-
 CMD ["npm", "run", "dev"]
